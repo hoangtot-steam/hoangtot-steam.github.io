@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Khay thuốc thông minh – Hoàng Tốt STEAM</title>
+
+  <script type="module"
+    src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module">
+  </script>
+
   <style>
     body {
       margin: 0;
@@ -22,7 +27,7 @@
       margin-top: 1rem;
       padding: 1.25rem;
       border: 1px solid #d5deeb;
-      border-radius: .6rem;
+      border-radius: .75rem;
       background: white;
     }
 
@@ -34,19 +39,46 @@
     a {
       color: #1555a0;
     }
+
+    button {
+      padding: .75rem 1rem;
+      border: 0;
+      border-radius: .5rem;
+      background: #1555a0;
+      color: white;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #104582;
+    }
   </style>
 </head>
+
 <body>
   <main>
-    <a href="./index.html">← Về danh sách dự án</a>
+    <a href="./">← Về danh sách dự án</a>
 
     <article>
       <h1>Khay thuốc thông minh</h1>
       <p><strong>Bo mạch</strong> ESP32</p>
-      <p>Khay thuốc cho phép cài giờ để nhắc người dùng uống thuốc theo lịch.</p>
+      <p>Khay thuốc cho phép cài giờ nhắc uống thuốc theo lịch.</p>
 
       <h2>Nạp firmware qua USB</h2>
-      <p>Chưa có firmware để nạp từ trang này.</p>
+      <ol>
+        <li>Mở trang bằng Chrome hoặc Edge trên máy tính.</li>
+        <li>Cắm ESP32 bằng cáp USB có truyền dữ liệu.</li>
+        <li>Bấm nút nạp, chọn cổng COM của ESP32 rồi chọn Install.</li>
+      </ol>
+
+      <p>Lưu lại lịch nhắc trước khi nạp vì firmware gộp có thể xóa cài đặt trên bo.</p>
+
+      <esp-web-install-button manifest="./manifest-khay-thuoc.json">
+        <button slot="activate" type="button">Nạp firmware qua USB</button>
+        <span slot="unsupported">Hãy mở trang bằng Chrome hoặc Edge trên máy tính.</span>
+      </esp-web-install-button>
     </article>
   </main>
 </body>
