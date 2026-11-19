@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Khay thuốc thông minh – Hoàng Tốt STEAM</title>
+  <title>Hoàng Tốt – Dự án STEAM</title>
   <style>
     body {
       margin: 0;
@@ -18,36 +18,112 @@
       padding: 0 1rem;
     }
 
-    article {
-      margin-top: 1rem;
-      padding: 1.25rem;
+    label {
+      display: block;
+      margin-bottom: .4rem;
+      font-weight: 600;
+    }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: .8rem 1rem;
+      border: 1px solid #8798ad;
+      border-radius: .6rem;
+      font: inherit;
+    }
+
+    .du-an {
+      margin-top: .8rem;
       border: 1px solid #d5deeb;
       border-radius: .6rem;
       background: white;
     }
 
-    h1 {
-      margin-top: 0;
-      line-height: 1.2;
+    .du-an a,
+    summary {
+      display: block;
+      padding: .9rem 1rem;
+      border-radius: .6rem;
+      color: #1555a0;
+      font-weight: 650;
+      cursor: pointer;
     }
 
-    a {
-      color: #1555a0;
+    summary {
+      display: list-item;
+    }
+
+    .du-an a:hover,
+    summary:hover {
+      background: #e8f1ff;
+    }
+
+    details p {
+      margin: 0;
+      padding: 0 1rem 1rem;
     }
   </style>
 </head>
 <body>
   <main>
-    <a href="./index.html">← Về danh sách dự án</a>
+    <h1>Hoàng Tốt – Dự án STEAM</h1>
 
-    <article>
-      <h1>Khay thuốc thông minh</h1>
-      <p><strong>Bo mạch</strong> ESP32</p>
-      <p>Khay thuốc cho phép cài giờ để nhắc người dùng uống thuốc theo lịch.</p>
+    <label for="tim">Tìm theo tên dự án hoặc bo mạch</label>
+    <input id="tim" type="search" placeholder="Ví dụ: khay thuoc, ESP32, Uno">
 
-      <h2>Nạp firmware qua USB</h2>
-      <p>Chưa có firmware để nạp từ trang này.</p>
-    </article>
+    <p id="khong-co" role="status" hidden>Không tìm thấy dự án phù hợp.</p>
+
+    <section aria-label="Danh sách dự án">
+      <article class="du-an">
+        <a href="./khay-thuoc.html">Khay thuốc thông minh – ESP32 →</a>
+      </article>
+
+      <details class="du-an">
+        <summary>Mái che thông minh – ESP32</summary>
+        <p>Mái che tự đóng hoặc mở theo mưa, ánh sáng, nhiệt độ và độ ẩm.</p>
+      </details>
+
+      <details class="du-an">
+        <summary>Quạt thông minh – ESP32</summary>
+        <p>Quạt bật theo chuyển động và có thể điều khiển bằng Blynk.</p>
+      </details>
+
+      <details class="du-an">
+        <summary>Máy đếm sản phẩm – Arduino Uno R3</summary>
+        <p>Cảm biến hồng ngoại đếm sản phẩm và hiển thị số lượng trên LCD.</p>
+      </details>
+    </section>
   </main>
+
+  <script>
+    const oTim = document.querySelector("#tim");
+    const danhSach = document.querySelectorAll(".du-an");
+    const thongBao = document.querySelector("#khong-co");
+
+    function boDau(chuoi) {
+      return chuoi.toLowerCase().normalize("NFD")
+        .replace(/\p{M}/gu, "")
+        .replaceAll("đ", "d")
+        .trim();
+    }
+
+    function locDuAn() {
+      const tuKhoa = boDau(oTim.value);
+      let coKetQua = false;
+
+      for (const duAn of danhSach) {
+        const ten = duAn.querySelector("a, summary").textContent;
+        const phuHop = boDau(ten).includes(tuKhoa);
+        duAn.hidden = !phuHop;
+        coKetQua = coKetQua || phuHop;
+      }
+
+      thongBao.hidden = coKetQua;
+    }
+
+    oTim.addEventListener("input", locDuAn);
+    locDuAn();
+  </script>
 </body>
 </html>
