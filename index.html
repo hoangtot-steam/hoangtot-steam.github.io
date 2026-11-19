@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hoàng Tốt – Dự án STEAM</title>
+  <style>
+    body { font: 1rem system-ui; max-width: 680px; margin: 3rem auto; padding: 0 1rem; }
+    input { box-sizing: border-box; width: 100%; padding: .8rem; font: inherit; }
+    li { margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Hoàng Tốt – Dự án STEAM</h1>
+  <label for="tim">Tìm theo tên dự án hoặc bo mạch</label>
+  <input id="tim" type="search" placeholder="Ví dụ: khay thuoc hoặc ESP32">
+
+  <ul id="du-an">
+    <li>Khay thuốc thông minh – ESP32</li>
+    <li>Mái che thông minh – ESP32</li>
+    <li>Quạt thông minh – ESP32</li>
+    <li>Máy đếm sản phẩm – Arduino Uno R3</li>
+  </ul>
+
+  <script>
+    const oTim = document.querySelector("#tim");
+    const duAn = document.querySelectorAll("#du-an li");
+
+    function boDau(chuoi) {
+      return chuoi.toLowerCase().normalize("NFD")
+        .replace(/\p{M}/gu, "").replaceAll("đ", "d").trim();
+    }
+
+    oTim.addEventListener("input", () => {
+      const tuKhoa = boDau(oTim.value);
+      for (const muc of duAn) {
+        muc.hidden = !boDau(muc.textContent).includes(tuKhoa);
+      }
+    });
+  </script>
+</body>
+</html>
